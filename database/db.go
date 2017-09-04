@@ -92,6 +92,15 @@ func (db *DbConfig) UpdateTemplate(args ...interface{}) bool {
 	return success
 }
 
+//UpdateClearTemplate in database
+func (db *DbConfig) UpdateClearTemplate(args ...interface{}) bool {
+	success := tmpDb.UpdateClearTemplate(args...)
+	if success == true {
+		fmt.Println("updated record")
+	}
+	return success
+}
+
 //GetActiveTemplate get a row. Passing in tx allows for transactions
 func (db *DbConfig) GetActiveTemplate(args ...interface{}) *TemplateRow {
 	var templateRow TemplateRow

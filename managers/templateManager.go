@@ -85,23 +85,11 @@ func (db *TemplateDB) InsertTemplate(template *Template) *Response {
 //UpdateActiveTemplate in database
 func (db *TemplateDB) UpdateActiveTemplate(template *Template) *Response {
 	var rtn Response
-	var existingTemp *Template
+	//var existingTemp *Template
 	dbConnected := db.DbConfig.ConnectionTest()
 	if !dbConnected {
 		fmt.Println("reconnection to closed database")
 		db.DbConfig.ConnectDb()
-	}
-	a1 := []interface{}{template.Application, template.ClientID}
-	rowPtr1 := db.DbConfig.GetActiveTemplate(a1...)
-	if rowPtr1 != nil {
-		print("active template row: ")
-		println(rowPtr1.Row)
-		foundRow := rowPtr1.Row
-		existingTemp = parseTemplateRow(&foundRow)
-		if existingTemp.ID != 0 {
-			existingTemp.Active = false
-		}
-
 	}
 	var a []interface{}
 	template.Active = true
@@ -110,13 +98,12 @@ func (db *TemplateDB) UpdateActiveTemplate(template *Template) *Response {
 	if success == true {
 		fmt.Println("update record")
 	}
-	if existingTemp.ID != 0 {
-		var a2 []interface{}
-		a2 = append(a2, existingTemp.Active, existingTemp.ID, existingTemp.ClientID)
-		success2 := db.DbConfig.UpdateTemplate(a2...)
-		if success2 == true {
-			fmt.Println("update and deactivated template")
-		}
+	var a2 []interface{}
+	template.Active = false
+	a2 = append(a2, template.Active, template.ID, template.ClientID)
+	success2 := db.DbConfig.UpdateClearTemplate(a2...)
+	if success2 == true {
+		fmt.Println("update cleared record")
 	}
 
 	rtn.ID = template.ID
@@ -139,7 +126,7 @@ func (db *TemplateDB) GetActiveTemplate(template *Template) *Template {
 	return rtn
 }
 
-//GetContentByClient content by Client
+//GetTemplateByClient content by Client
 func (db *TemplateDB) GetTemplateByClient(template *Template) *[]Template {
 	var rtn []Template
 	var a []interface{}

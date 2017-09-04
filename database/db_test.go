@@ -71,6 +71,17 @@ func TestUpdateTemplate(t *testing.T) {
 	}
 }
 
+func TestUpdateClearTemplate(t *testing.T) {
+	var a []interface{}
+	a = append(a, false, insertID, 126)
+	//can also be: a := []interface{}{"test insert", time.Now(), "some content text", 125}
+	success := dbConfig.UpdateClearTemplate(a...)
+	if success != true {
+		fmt.Println("database update failed")
+		t.Fail()
+	}
+}
+
 func TestGetActiveTemplate(t *testing.T) {
 	a := []interface{}{"cms", 126}
 	rowPtr := dbConfig.GetActiveTemplate(a...)

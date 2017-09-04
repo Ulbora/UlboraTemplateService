@@ -48,6 +48,12 @@ func UpdateTemplate(args ...interface{}) bool {
 	return success
 }
 
+//UpdateClearTemplate update a template
+func UpdateClearTemplate(args ...interface{}) bool {
+	success := crud.Update(nil, UpdateClearNonActiveTemplateQuery, args...)
+	return success
+}
+
 //GetActiveTemplate get the active template
 func GetActiveTemplate(args ...interface{}) *crud.DbRow {
 	rowPtr := crud.Get(TemplateGetActiveQuery, args...)
