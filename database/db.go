@@ -123,6 +123,15 @@ func (db *DbConfig) GetTemplateByClient(args ...interface{}) *TemplateRows {
 	return &templateRows
 }
 
+//DeleteTemplate in database
+func (db *DbConfig) DeleteTemplate(args ...interface{}) bool {
+	success := tmpDb.DeleteTemplate(args...)
+	if success == true {
+		fmt.Println("deleted record")
+	}
+	return success
+}
+
 //CloseDb database connection
 func (db *DbConfig) CloseDb() bool {
 	rtn := tmpDb.CloseDb()

@@ -66,6 +66,12 @@ func GetTemplateByClient(args ...interface{}) *crud.DbRows {
 	return rowsPtr
 }
 
+//DeleteTemplate templates for a client and app
+func DeleteTemplate(args ...interface{}) bool {
+	rowsPtr := crud.Delete(nil, TemplateDeleteQuery, args...)
+	return rowsPtr
+}
+
 //CloseDb close connection to db
 func CloseDb() bool {
 	res := crud.Close()

@@ -150,6 +150,32 @@ func TestGetTemplateByClient(t *testing.T) {
 	}
 }
 
+func TestDeleteTemplate(t *testing.T) {
+	var a []interface{}
+	a = append(a, insertID, 126)
+	//can also be: a := []interface{}{"test insert", time.Now(), "some content text", 125}
+	success := dbConfig.DeleteTemplate(a...)
+	if success == true {
+		fmt.Print("deleted Id: ")
+		fmt.Println(insertID)
+	} else {
+		fmt.Println("database delete failed")
+		t.Fail()
+	}
+
+	var a2 []interface{}
+	a2 = append(a2, insertID2, 126)
+	//can also be: a := []interface{}{"test insert", time.Now(), "some content text", 125}
+	success2 := dbConfig.DeleteTemplate(a2...)
+	if success2 == true {
+		fmt.Print("deleted Id: ")
+		fmt.Println(insertID2)
+	} else {
+		fmt.Println("database delete failed")
+		t.Fail()
+	}
+}
+
 func TestCloseDb(t *testing.T) {
 	if connected == true {
 		rtn := dbConfig.CloseDb()

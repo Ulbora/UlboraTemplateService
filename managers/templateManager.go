@@ -143,6 +143,25 @@ func (db *TemplateDB) GetTemplateByClient(template *Template) *[]Template {
 	return &rtn
 }
 
+//DeleteTemplate in database
+func (db *TemplateDB) DeleteTemplate(template *Template) *Response {
+	var rtn Response
+	dbConnected := db.DbConfig.ConnectionTest()
+	if !dbConnected {
+		fmt.Println("reconnection to closed database")
+		db.DbConfig.ConnectDb()
+	}
+	var a []interface{}
+	a = append(a, template.ID, template.ClientID)
+	success := db.DbConfig.DeleteTemplate(a...)
+	if success == true {
+		fmt.Println("inserted record")
+	}
+	rtn.Success = success
+	rtn.ID = template.ID
+	return &rtn
+}
+
 //CloseDb connection to database
 func (db *TemplateDB) CloseDb() bool {
 	rtn := db.DbConfig.CloseDb()

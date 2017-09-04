@@ -77,6 +77,7 @@ func main() {
 	router.HandleFunc("/rs/template/updateActive", handleTemplateChange).Methods("PUT")
 	router.HandleFunc("/rs/template/get/{app}/{clientId}", handleTemplate).Methods("GET")
 	router.HandleFunc("/rs/template/list/{app}/{clientId}", handleTemplateList).Methods("GET")
+	router.HandleFunc("/rs/template/delete/{id}/{clientId}", handleTemplateDelete).Methods("DELETE")
 	http.ListenAndServe(":3009", router)
 }
 

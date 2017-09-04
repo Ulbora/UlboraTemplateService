@@ -120,3 +120,23 @@ Example Response
 ]
 
 ```
+
+
+## Delete Templates for a Client
+
+```
+DELETE:
+URL: http://localhost:3009/rs/template/delete/107/403
+  
+```
+
+```
+Example Response   
+
+{
+    "success": true,
+    "id": 107
+}
+
+```
+

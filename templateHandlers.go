@@ -164,3 +164,49 @@ func handleTemplateList(w http.ResponseWriter, r *http.Request) {
 
 	}
 }
+
+func handleTemplateDelete(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	vars := mux.Vars(r)
+	id, errID := strconv.ParseInt(vars["id"], 10, 0)
+	if errID != nil {
+		http.Error(w, "bad request", http.StatusBadRequest)
+	}
+	clientID, errClient := strconv.ParseInt(vars["clientId"], 10, 0)
+	if errClient != nil {
+		http.Error(w, "bad request", http.StatusBadRequest)
+	}
+	switch r.Method {
+	case "DELETE":
+		auth := getAuth(r)
+		me := new(uoauth.Claim)
+		me.Role = "admin"
+		me.Scope = "write"
+		me.URI = "/rs/content/delete"
+		valid := auth.Authorize(me)
+		if valid != true {
+			w.WriteHeader(http.StatusUnauthorized)
+		} else {
+			tmpl := new(templateManager.Template)
+			tmpl.ClientID = clientID
+			tmpl.ID = id
+			resOut := templateDB.DeleteTemplate(tmpl)
+			//fmt.Print("response: ")
+			//fmt.Println(resOut)
+
+			resJSON, err := json.Marshal(resOut)
+			//fmt.Print("response json: ")
+			//fmt.Println(string(resJSON))
+			if err != nil {
+				log.Println(err.Error())
+				http.Error(w, "json output failed", http.StatusInternalServerError)
+			}
+			w.WriteHeader(http.StatusOK)
+			if string(resJSON) == "null" {
+				fmt.Fprint(w, "[]")
+			} else {
+				fmt.Fprint(w, string(resJSON))
+			}
+		}
+	}
+}

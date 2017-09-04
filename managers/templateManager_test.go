@@ -121,6 +121,34 @@ func TestGetTemplateByClient(t *testing.T) {
 	}
 }
 
+func TestDeleteTemplate(t *testing.T) {
+	var tm Template
+	tm.ID = insertID
+	tm.ClientID = 127
+
+	res := templateDB.DeleteTemplate(&tm)
+	if res.Success == true {
+		fmt.Print("deleted Id: ")
+		fmt.Println(insertID)
+	} else {
+		fmt.Println("database delete failed")
+		t.Fail()
+	}
+
+	var tm2 Template
+	tm2.ID = insertID2
+	tm2.ClientID = 127
+
+	res2 := templateDB.DeleteTemplate(&tm2)
+	if res2.Success == true {
+		fmt.Print("deleted Id: ")
+		fmt.Println(insertID2)
+	} else {
+		fmt.Println("database delete failed")
+		t.Fail()
+	}
+}
+
 func TestCloseDb(t *testing.T) {
 	success := templateDB.CloseDb()
 	if success != true {
