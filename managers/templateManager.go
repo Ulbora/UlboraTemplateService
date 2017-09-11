@@ -71,7 +71,7 @@ func (db *TemplateDB) InsertTemplate(template *Template) *Response {
 	}
 	template.Name = stripSpace(template.Name)
 	var a []interface{}
-	template.Active = false
+	//template.Active = false
 	a = append(a, template.Name, template.Application, template.Active, template.ClientID)
 	success, insID := db.DbConfig.InsertTemplate(a...)
 	if success == true {
