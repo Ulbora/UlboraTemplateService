@@ -45,7 +45,7 @@ func handleTemplateChange(w http.ResponseWriter, r *http.Request) {
 	} else {
 		switch r.Method {
 		case "POST":
-			me.URI = "/rs/template/add"
+			me.URI = "/ulbora/rs/template/add"
 			valid := auth.Authorize(me)
 			if valid != true {
 				w.WriteHeader(http.StatusUnauthorized)
@@ -73,7 +73,7 @@ func handleTemplateChange(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 		case "PUT":
-			me.URI = "/rs/template/update"
+			me.URI = "/ulbora/rs/template/update"
 			valid := auth.Authorize(me)
 			if valid != true {
 				w.WriteHeader(http.StatusUnauthorized)
@@ -182,7 +182,7 @@ func handleTemplateDelete(w http.ResponseWriter, r *http.Request) {
 		me := new(uoauth.Claim)
 		me.Role = "admin"
 		me.Scope = "write"
-		me.URI = "/rs/content/delete"
+		me.URI = "/ulbora/rs/template/delete"
 		valid := auth.Authorize(me)
 		if valid != true {
 			w.WriteHeader(http.StatusUnauthorized)
