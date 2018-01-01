@@ -71,7 +71,7 @@ func main() {
 	templateDB.ConnectDb()
 	defer templateDB.CloseDb()
 
-	fmt.Println("Server running!")
+	fmt.Println("Server running on port 3009!")
 	router := mux.NewRouter()
 	router.HandleFunc("/rs/template/add", handleTemplateChange).Methods("POST")
 	router.HandleFunc("/rs/template/updateActive", handleTemplateChange).Methods("PUT")
