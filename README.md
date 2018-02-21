@@ -1,3 +1,5 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/Ulbora/UlboraTemplateService)](https://goreportcard.com/report/github.com/Ulbora/UlboraTemplateService)
+
 Ulbora Template Service
 ==============
 
